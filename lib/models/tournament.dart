@@ -1,7 +1,10 @@
+import 'package:world_cup_calendar/models/match.dart';
+
 class Tournament {
-
   final List<Match> matches;
-  final int daysLeft; 
 
-  Tournament({required this.matches,required this.daysLeft});
+  Tournament({required this.matches});
 }
+
+
+
