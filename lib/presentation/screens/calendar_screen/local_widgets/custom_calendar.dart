@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
-import 'package:world_cup_calendar/presentation/screens/matches_screen/matches_screen.dart';
 
 class CustomCalendar extends StatelessWidget {
   final DateTime focusedDay;

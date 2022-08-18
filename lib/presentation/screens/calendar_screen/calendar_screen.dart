@@ -2,8 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
-import 'package:world_cup_calendar/business_logic/cal.dart';
-import 'package:world_cup_calendar/models/tournament.dart';
+import 'package:world_cup_calendar/business_logic/days_calculation.dart';
 import 'package:world_cup_calendar/presentation/screens/calendar_screen/local_widgets/custom_calendar.dart';
 import 'package:world_cup_calendar/presentation/screens/matches_screen/matches_screen.dart';
 
@@ -49,9 +48,6 @@ class _CalendarScreenState extends State<CalendarScreen> {
   Widget build(BuildContext context) {
     String strDigits(int n) => n.toString().padLeft(2, '0');
     final days = strDigits(myDuration.inDays);
-    final hours = strDigits(myDuration.inHours.remainder(24));
-    final minutes = strDigits(myDuration.inMinutes.remainder(60));
-    final seconds = strDigits(myDuration.inSeconds.remainder(60));
     return SafeArea(
       child: Scaffold(
         backgroundColor: const Color(0xFFE1E1E1),
@@ -92,7 +88,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
                       width: 134.0,
                       child: Center(
                         child: Text(
-                          '$days Days $seconds',
+                          '$days Days',
                           style: const TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.w600,
