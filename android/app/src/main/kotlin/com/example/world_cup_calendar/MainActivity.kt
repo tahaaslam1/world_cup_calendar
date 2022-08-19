@@ -1,4 +1,4 @@
-package com.example.world_cup_calendar
+package com.wrld.calendar22cup
 
 import io.flutter.embedding.android.FlutterActivity
 

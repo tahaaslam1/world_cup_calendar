@@ -13,7 +13,6 @@ const kFocusedCalendarCellColor = Color(0xFFFC4600);
 const kCalendarDayColor = Color(0xFF1A1A1A);
 
 var kCustomCalendarHeaderStyle = HeaderStyle(
-  
   titleCentered: true,
   formatButtonVisible: false,
   headerPadding: EdgeInsets.only(
@@ -22,18 +21,14 @@ var kCustomCalendarHeaderStyle = HeaderStyle(
     top: 24.0.h,
     bottom: 40.0.h,
   ),
-  leftChevronPadding: EdgeInsets.symmetric(horizontal: 24.0.w),
-  rightChevronPadding: EdgeInsets.symmetric(horizontal: 24.0.w) ,
-  leftChevronIcon: FaIcon(
+  leftChevronIcon: const FaIcon(
     FontAwesomeIcons.caretLeft,
-    size: 20.0.sp,
   ),
-  rightChevronIcon: FaIcon(
+  rightChevronIcon: const FaIcon(
     FontAwesomeIcons.caretRight,
-    size: 20.0.sp,
   ),
   titleTextStyle: TextStyle(
-    fontSize: 30.sp,
+    fontSize: 26.sp,
     fontWeight: FontWeight.w700,
     fontFamily: 'Roboto',
     fontStyle: FontStyle.normal,
