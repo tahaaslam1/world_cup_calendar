@@ -1,13 +1,17 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
+import 'package:world_cup_calendar/constants.dart';
+import 'package:world_cup_calendar/presentation/screens/match_screen/match_screen.dart';
+import 'package:world_cup_calendar/models/match.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CustomCalendar extends StatelessWidget {
   final DateTime focusedDay;
   final DateTime firstDay;
   final DateTime lastDay;
   final HeaderStyle headerStyle;
-  final Widget route;
+  final List<Match> matches;
 
   const CustomCalendar({
     Key? key,
@@ -15,28 +19,36 @@ class CustomCalendar extends StatelessWidget {
     required this.firstDay,
     required this.lastDay,
     required this.headerStyle,
-    required this.route,
+    required this.matches,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.fromLTRB(8, 0, 8, 8),
-      padding: const EdgeInsets.only(bottom: 28.0),
+      margin:  EdgeInsets.fromLTRB(6.w, 0.h, 6.w, 8.h),
+      padding:  EdgeInsets.only(bottom: 28.0.h,left : 8.0.w,right : 8.0.w),
       decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(12),
+        color: kPrimaryColor,
+        borderRadius: BorderRadius.circular(12.0.r),
         boxShadow: [
           BoxShadow(
-            color: const Color(0xFF000000).withOpacity(0.25),
+            color: kContainersShadowColor.withOpacity(0.25),
             spreadRadius: 1,
-            blurRadius: 1,
+            blurRadius: 2,
+            offset: const Offset(0, 1),
           ),
         ],
       ),
       child: TableCalendar(
+        rowHeight: 52.0.h,
         onDaySelected: (selectedDay, focusedDay) {
-          //TODO: resolve this thing if time available
+          List<Match> matchesOnThisDay = [];
+
+          for (int i = 0; i < matches.length; ++i) {
+            if (selectedDay.day == matches[i].matchDateTime.day) {
+              matchesOnThisDay.add(matches[i]);
+            }
+          }
           if ((selectedDay.day >= 21 &&
                   selectedDay.month == DateTime.november &&
                   selectedDay.day <= 30) ||
@@ -44,13 +56,10 @@ class CustomCalendar extends StatelessWidget {
                   selectedDay.month == DateTime.december &&
                   selectedDay.day <= 2)) {
             Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) {
-                  return route;
-                },
-              ),
-            );
+                context,
+                MaterialPageRoute(
+                    builder: (context) =>
+                        MatchScreen(matches: matchesOnThisDay)));
           } else if (selectedDay.day >= 3 &&
               selectedDay.month == DateTime.december &&
               selectedDay.day <= 18) {
@@ -68,7 +77,7 @@ class CustomCalendar extends StatelessWidget {
                     child: const Text(
                       'OK',
                       style: TextStyle(
-                        color: Color(0xFF0C3C72),
+                        color: kAppBarBackgroundColor,
                       ),
                     ),
                   ),
@@ -89,7 +98,7 @@ class CustomCalendar extends StatelessWidget {
                     },
                     child: const Text(
                       'OK',
-                      style: TextStyle(color: Color(0xFF0C3C72)),
+                      style: TextStyle(color: kAppBarBackgroundColor),
                     ),
                   ),
                 ],
@@ -110,65 +119,71 @@ class CustomCalendar extends StatelessWidget {
                 (day.day >= 1 &&
                     day.month == DateTime.december &&
                     day.day <= 2)) {
-              return Container(
-                height: 40.0,
-                width: 44.0,
-                alignment: Alignment.topRight,
-                decoration: BoxDecoration(
-                  color: const Color(0xFFF2F6FF),
-                  boxShadow: [
-                    BoxShadow(
-                      color: const Color(0xFF000000).withOpacity(0.25),
-                      spreadRadius: 1,
-                      blurRadius: 4,
-                      offset: const Offset(0, 4),
-                    ),
-                  ],
-                  borderRadius: BorderRadius.circular(4.0),
-                  border: Border.all(
-                    color: const Color(0xFFFC4600),
-                  ),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.only(top: 5.0, right: 6.0),
-                  child: Text(
-                    '${day.day}',
-                    style: const TextStyle(
-                      color: Color(0xFF1A1A1A),
-                      fontSize: 12.0,
-                      fontFamily: 'Gadugi',
-                      fontWeight: FontWeight.w400,
-                      fontStyle: FontStyle.normal,
-                    ),
-                  ),
-                ),
-              );
-            } else {
-              return Container(
-                height: 40.0,
-                width: 44.0,
-                alignment: Alignment.topRight,
-                decoration: BoxDecoration(
-                    color: const Color(0xFFF2F6FF),
+              return Padding(
+                padding:  EdgeInsets.symmetric(horizontal : 3.0.w),
+                child: Container(
+                  height: 38.0.h,
+                  width: 45.0.w,
+                  alignment: Alignment.topRight,
+                  decoration: BoxDecoration(
+                    color: kCalendarCellColor,
                     boxShadow: [
                       BoxShadow(
-                        color: const Color(0xFF000000).withOpacity(0.25),
+                        color: kContainersShadowColor.withOpacity(0.25),
                         spreadRadius: 1,
                         blurRadius: 4,
                         offset: const Offset(0, 4),
                       ),
                     ],
-                    borderRadius: BorderRadius.circular(4.0)),
-                child: Padding(
-                  padding: const EdgeInsets.only(top: 5.0, right: 6.0),
-                  child: Text(
-                    '${day.day}',
-                    style: const TextStyle(
-                      color: Color(0xFF1A1A1A),
-                      fontSize: 12.0,
-                      fontFamily: 'Gadugi',
-                      fontWeight: FontWeight.w400,
-                      fontStyle: FontStyle.normal,
+                    borderRadius: BorderRadius.circular(4.0.r),
+                    border: Border.all(
+                      color: kFocusedCalendarCellColor,
+                    ),
+                  ),
+                  child: Padding(
+                    padding:  EdgeInsets.only(top: 5.0.h, right: 6.0.w),
+                    child: Text(
+                      '${day.day}',
+                      style:  TextStyle(
+                        color: kCalendarDayColor,
+                        fontSize: 12.0.sp,
+                        fontFamily: 'Gadugi',
+                        fontWeight: FontWeight.w400,
+                        fontStyle: FontStyle.normal,
+                      ),
+                    ),
+                  ),
+                ),
+              );
+            } else {
+              return Padding(
+                padding: EdgeInsets.symmetric(horizontal : 3.0.w),
+                child: Container(
+                  height: 38.0.h,
+                  width: 45.0.w,
+                  alignment: Alignment.topRight,
+                  decoration: BoxDecoration(
+                      color: kCalendarCellColor,
+                      boxShadow: [
+                        BoxShadow(
+                          color: kContainersShadowColor.withOpacity(0.25),
+                          spreadRadius: 1,
+                          blurRadius: 4,
+                          offset: const Offset(0, 4),
+                        ),
+                      ],
+                      borderRadius: BorderRadius.circular(4.0.r)),
+                  child: Padding(
+                    padding: EdgeInsets.only(top: 5.0.h, right: 6.0.w),
+                    child: Text(
+                      '${day.day}',
+                      style:  TextStyle(
+                        color: kCalendarDayColor,
+                        fontSize: 12.0.sp,
+                        fontFamily: 'Gadugi',
+                        fontWeight: FontWeight.w400,
+                        fontStyle: FontStyle.normal,
+                      ),
                     ),
                   ),
                 ),
@@ -176,39 +191,45 @@ class CustomCalendar extends StatelessWidget {
             }
           },
           disabledBuilder: (context, day, focusedDay) {
-            return Container(
-              height: 40.0,
-              width: 44.0,
-              alignment: Alignment.topRight,
-              decoration: BoxDecoration(
-                  color: const Color(0xFFF2F6FF),
-                  boxShadow: [
-                    BoxShadow(
-                      color: const Color(0xFF000000).withOpacity(0.25),
-                      spreadRadius: 1,
-                      blurRadius: 4,
-                      offset: const Offset(0, 4),
-                    ),
-                  ],
-                  borderRadius: BorderRadius.circular(4.0)),
+            return Padding(
+              padding:EdgeInsets.symmetric(horizontal : 3.0.w),
+              child: Container(
+                height: 38.0.h,
+                width: 45.0.w,
+                alignment: Alignment.topRight,
+                decoration: BoxDecoration(
+                    color: kCalendarCellColor,
+                    boxShadow: [
+                      BoxShadow(
+                        color: kContainersShadowColor.withOpacity(0.25),
+                        spreadRadius: 1,
+                        blurRadius: 4,
+                        offset: const Offset(0, 4),
+                      ),
+                    ],
+                    borderRadius: BorderRadius.circular(4.0.r)),
+              ),
             );
           },
           outsideBuilder: (context, day, focusedDay) {
-            return Container(
-              height: 40.0,
-              width: 44.0,
-              alignment: Alignment.topRight,
-              decoration: BoxDecoration(
-                  color: const Color(0xFFF2F6FF),
-                  boxShadow: [
-                    BoxShadow(
-                      color: const Color(0xFF000000).withOpacity(0.25),
-                      spreadRadius: 1,
-                      blurRadius: 4,
-                      offset: const Offset(0, 4),
-                    ),
-                  ],
-                  borderRadius: BorderRadius.circular(4.0)),
+            return Padding(
+              padding: EdgeInsets.symmetric(horizontal : 3.0.w),
+              child: Container(
+                height: 38.0.h,
+                width: 45.0.w,
+                alignment: Alignment.topRight,
+                decoration: BoxDecoration(
+                    color: kCalendarCellColor,
+                    boxShadow: [
+                      BoxShadow(
+                        color: kContainersShadowColor.withOpacity(0.25),
+                        spreadRadius: 1,
+                        blurRadius: 4,
+                        offset: const Offset(0, 4),
+                      ),
+                    ],
+                    borderRadius: BorderRadius.circular(4.0.r)),
+              ),
             );
           },
         ),

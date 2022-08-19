@@ -3,7 +3,12 @@ import 'package:world_cup_calendar/models/match.dart';
 import 'package:world_cup_calendar/models/tournament.dart';
 
 class TournamentData {
-  final tournament = Tournament(
+
+  List<Match> getMatchData() {
+    return _tournament.matches;
+  }
+
+  final _tournament = Tournament(
     matches: [
       Match(
         matchId: 1,
@@ -62,7 +67,7 @@ class TournamentData {
         ),
         awayTeam: Country(
           countryName: 'Saudia Arabia',
-          countryFlag: 'assets/countries/saudia_arabia.ppng',
+          countryFlag: 'assets/countries/saudia_arabia.png',
         ),
       ),
       Match(
@@ -566,7 +571,7 @@ class TournamentData {
         ),
         awayTeam: Country(
           countryName: 'Switzerland',
-          countryFlag: 'assets/countries/switerland.png',
+          countryFlag: 'assets/countries/switzerland.png',
         ),
       ),
       Match(

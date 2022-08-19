@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
+import 'package:world_cup_calendar/business_logic/providers/count_down_provider.dart';
 
 import 'presentation/screens/calendar_screen/calendar_screen.dart';
 
-
 void main() {
-  runApp(const WorldCupCalendar());
+  WidgetsFlutterBinding.ensureInitialized();
+  runApp(
+    const WorldCupCalendar(),
+  );
 }
 
 class WorldCupCalendar extends StatelessWidget {
@@ -12,10 +17,18 @@ class WorldCupCalendar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      title: 'World Cup Calendar Application',
-      home:  CalendarScreen(),
+    return ScreenUtilInit(
+      builder: (context, child) => MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'World Cup Calendar Application',
+        home: MultiProvider(
+          providers: [
+            ChangeNotifierProvider(create: (context) => CountDownProvider()),
+          ],
+          child: const CalendarScreen(),
+        ),
+      ),
+      designSize: const Size(360,640),
     );
   }
 }
-
