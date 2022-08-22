@@ -67,6 +67,7 @@ class MatchScreen extends StatelessWidget {
                         awayTeam: matches[index].awayTeam.countryName,
                         matchTime: matches[index].matchDateTime,
                       ),
+                      
                       SizedBox(
                         height: 20.0.h,
                       )
